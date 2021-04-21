@@ -16,7 +16,7 @@ exports.tampilsemuadatasiswa = function (req, res) {
             response.ok(rows, res)
         }
     });
-};
+}
 
 // Showing all id from database
 exports.tampilberdasarkanid = function (req, res) {
@@ -29,7 +29,7 @@ exports.tampilberdasarkanid = function (req, res) {
                 response.ok(rows, res)
             }
         });
-};
+}
 
 //Adding data to database
 exports.tambahmahasiswa = function (req, res) {
@@ -47,7 +47,7 @@ exports.tambahmahasiswa = function (req, res) {
                 response.ok("Added sucsessfuly", res)
             }
         });
-};
+}
 
 //Change data from database (update)
 exports.ubahMahasiswa = function (req, res) {
@@ -78,4 +78,19 @@ exports.hapusMahasiswa = function (req, res) {
                 response.ok("Deleted Succsessfuly", res)
             }
         });
-};
+}
+
+//showing matakuliah group
+exports.tampilgroupmatakuliah = function (req, res) {
+    Connection.query('SELECT mahasiswa.id_mahasiswa,mahasiswa.nim,mahasiswa.nama,mahasiswa.jurusan,matakuliah.matakuliah,matakuliah.sks FROM krs JOIN matakuliah JOIN mahasiswa WHERE krs.id_matakuliah = matakuliah.id_matakuliah AND krs.id_mahasiswa = mahasiswa.id_mahasiswa ORDER BY mahasiswa.id_mahasiswa',
+        function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+            } else {
+                response.oknested(rows, res);
+            }
+
+        }
+    )
+
+}
