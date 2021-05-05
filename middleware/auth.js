@@ -1,4 +1,4 @@
-var connection = require('../koneksi');
+var connection = require('../connection');
 var mysql = require('mysql');
 var md5 = require('MD5');
 var response = require('../res');
@@ -7,36 +7,36 @@ var config = require('../config/secret');
 var ip = require('ip');
 
 // registration controller
-exports.registrasi = function(req,res) {
+exports.registrasi = function (req, res) {
     var post = {
         username: req.body.username,
         email: req.body.email,
         password: md5(req.body.password),
-        role:req.body.role,
+        role: req.body.role,
         tanggal_daftar: new Date()
     }
 
     var query = "SELECT email FROM ?? WHERE ??";
-    var table = ["user","email",post.email];
+    var table = ["user", "email", post.email];
 
-    query = mysql.format(query,table);
+    query = mysql.format(query, table);
 
-    connection.query(query,function(error,rows) {
-        if(error){
+    connection.query(query, function (error, rows) {
+        if (error) {
             console.log(error);
-        }else{
-            if(rows,lenght==0){
+        } else {
+            if (rows.length == 0) {
                 var query = "INSERT INTO ?? SET ?";
                 var table = ["user"];
-                query = mysql.format(query,table);
-                connection.query(query,post,function(error,rows) {
-                    if(error){
+                query = mysql.format(query, table);
+                connection.query(query, post, function (error, rows) {
+                    if (error) {
                         console.log(error);
-                    }else{
-                        response.ok("User Added Sucsessfully",res);
+                    } else {
+                        response.ok("User Added Sucsessfully", res);
                     }
                 });
-            }else{
+            } else {
                 response.ok("Email Already Exist!");
             }
         }
