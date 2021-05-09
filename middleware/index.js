@@ -3,6 +3,7 @@ var auth = require('./auth');
 var router = express.Router();
 
 //Registering Registration menu
-router.post('/api/v1/register',auth.registrasi);
+router.post('/api/v1/register', auth.registrasi);
+router.post('/api/v1/login', auth.login);
 
 module.exports = router;
